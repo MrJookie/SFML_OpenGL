@@ -22,6 +22,10 @@ int main()
 
     sf::Window window(sf::VideoMode(800, 600, 32), ":]", sf::Style::Titlebar | sf::Style::Close, settings);
     
+    sf::Clock clock;
+    sf::Time updateTime;
+    std::size_t updateNumFrames;
+    
     sf::Image res_texture;
 	if (!res_texture.loadFromFile("texture.jpg"))
 		return -1;
@@ -183,6 +187,19 @@ int main()
 
     while (window.isOpen())
     {
+		sf::Time elapsed = clock.restart();
+		float dt = elapsed.asSeconds();
+		
+		updateTime += elapsed;
+		updateNumFrames += 1;
+		if(updateTime >= sf::seconds(1.0f))
+		{
+			std::cout << "FPS: " << updateNumFrames << std::endl;
+			
+			updateTime -= sf::seconds(1.0f);
+			updateNumFrames = 0;
+		}
+		
         sf::Event event;
         while (window.pollEvent(event))
         {

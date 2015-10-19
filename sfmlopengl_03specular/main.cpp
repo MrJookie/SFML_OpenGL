@@ -22,6 +22,10 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600, 32), ":]", sf::Style::Titlebar | sf::Style::Close, settings);
     window.setKeyRepeatEnabled(true);
     
+    sf::Clock clock;
+    sf::Time updateTime;
+    std::size_t updateNumFrames;
+    
     GLuint shaderProgram = loadShaders("vertex.vert", "fragment.frag");
     GLuint shaderProgramLamp = loadShaders("vertexLamp.vert", "fragmentLamp.frag");
     
@@ -137,15 +141,23 @@ int main()
 	GLfloat lastY  =  600 / 2.0;
 	
 	bool firstMouse = true;
-	
-	sf::Clock clock;
-	
+
 	auto t_start = std::chrono::high_resolution_clock::now();
 
     while (window.isOpen())
     {
 		sf::Time elapsed = clock.restart();
-        float dt = elapsed.asSeconds();
+		float dt = elapsed.asSeconds();
+		
+		updateTime += elapsed;
+		updateNumFrames += 1;
+		if(updateTime >= sf::seconds(1.0f))
+		{
+			std::cout << "FPS: " << updateNumFrames << std::endl;
+			
+			updateTime -= sf::seconds(1.0f);
+			updateNumFrames = 0;
+		}
         
         sf::Event event;
         while (window.pollEvent(event))

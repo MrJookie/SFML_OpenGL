@@ -20,8 +20,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600, 32), ":]", sf::Style::Titlebar | sf::Style::Close, settings);
     window.setKeyRepeatEnabled(true);
 	
-	sf::Time updateTime;
-	std::size_t updateNumFrames;
+	sf::Clock clock;
+    sf::Time updateTime;
+    std::size_t updateNumFrames;
     
     const char * vertexShaderSource = "#version 130\n"
     "in vec3 in_vertexCoord;"
@@ -214,12 +215,21 @@ int main()
 	GLfloat lastY  =  600 / 2.0;
 	
 	bool firstMouse = true;
-	
-	sf::Clock clock;
+
     while (window.isOpen())
     {
 		sf::Time elapsed = clock.restart();
-        float dt = elapsed.asSeconds();
+		float dt = elapsed.asSeconds();
+		
+		updateTime += elapsed;
+		updateNumFrames += 1;
+		if(updateTime >= sf::seconds(1.0f))
+		{
+			std::cout << "FPS: " << updateNumFrames << std::endl;
+			
+			updateTime -= sf::seconds(1.0f);
+			updateNumFrames = 0;
+		}
         
         sf::Event event;
         while (window.pollEvent(event))
