@@ -308,7 +308,7 @@ int main()
         glUniform3f(viewPosLoc, cameraPos.x, cameraPos.y, cameraPos.z);
         
         float moveX = sin(time) * 0.8f;
-        float moveY = cos(time) * 0.8f;
+        float moveY = cos(time ) * 0.8f;
 		
 		glUniform1f(glGetUniformLocation(shaderProgram, "material.shininess"), 32.0f);
         // == ==========================
