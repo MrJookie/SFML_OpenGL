@@ -173,7 +173,7 @@ int main()
 	
 	GLuint specularMapID;
 	GLint uniform_specularMap;
-	
+
 	glGenTextures(1, &specularMapID);
 	glBindTexture(GL_TEXTURE_2D, specularMapID);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, specularMap.getSize().x, specularMap.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, specularMap.getPixelsPtr());
@@ -185,6 +185,8 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
     glBindTexture(GL_TEXTURE_2D, 0);
+    
+    //glEnable(GL_CULL_FACE); 
 
 	bool firstMouse = true;
 	
